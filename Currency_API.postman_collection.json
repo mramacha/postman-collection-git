@@ -1,0 +1,200 @@
+{
+	"info": {
+		"_postman_id": "f68d079c-fd42-4bf8-a7fc-948c645a6ecf",
+		"name": "Currency_API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "List Currency Quotes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cbda7a21-0f62-41a0-a4bc-c0a7ae3affc5",
+						"exec": [
+							"let currencySet = [];",
+							"let parentCurrency = \"\";",
+							"",
+							"var response = pm.response.json();",
+							"",
+							"",
+							"response.forEach(myFunction);",
+							"",
+							"function myFunction(currency, index) {",
+							"    // if (index === 0){",
+							"    //   parentCurrency = currency;",
+							"    // } else {",
+							"        currencySet.push([\"USD\",currency]);",
+							"    // }",
+							" }",
+							"pm.globals.set(\"currencySet\",currencySet);",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-RapidAPI-Host",
+						"value": "currency-exchange.p.rapidapi.com",
+						"type": "text"
+					},
+					{
+						"key": "X-RapidAPI-Key",
+						"value": "10fe21a4d0msh2212b3874b6dd58p1b9c97jsn542c7cfa4d0b",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"q\": \"1.0\",\n\t\"from\": \"USD\",\n\t\"to\": \"USD\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://currency-exchange.p.rapidapi.com/listquotes",
+					"protocol": "https",
+					"host": [
+						"currency-exchange",
+						"p",
+						"rapidapi",
+						"com"
+					],
+					"path": [
+						"listquotes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Exchange Rate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8e75ddcb-7eb9-4fbf-9176-6a93e6377d63",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"   console.log(\"Exchange Rate of \" + pm.variables.get(\"from\") + \" to \" +  pm.variables.get(\"to\") + \" is \"  + pm.response.text())",
+							"});",
+							"",
+							"//Array.isArray(currencySet) && ",
+							"let currencySet = pm.globals.get(\"currencySet\");",
+							"if (currencySet.length > 0){",
+							"    postman.setNextRequest(\"Get Exchange Rate\");",
+							"} else {",
+							"    postman.setNextRequest(\"\");",
+							"    pm.variables.unset(\"currencySet\");",
+							"    pm.variables.unset(\"from\");",
+							"    pm.variables.unset(\"to\");",
+							"}",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ef043f3f-cd92-41d8-a4f4-4c01dec06b71",
+						"exec": [
+							"let currencySet = pm.globals.get(\"currencySet\");",
+							"",
+							"//Array.isArray(currencySet) && ",
+							"",
+							"if (currencySet.length > 0){",
+							"    let currencySet = pm.globals.get(\"currencySet\");",
+							"    let set = currencySet.shift();",
+							"    pm.globals.set(\"from\",set[0]);",
+							"    pm.globals.set(\"to\",set[1]);",
+							"    pm.globals.set(\"currencySet\",currencySet)",
+							"}",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-RapidAPI-Host",
+						"type": "text",
+						"value": "currency-exchange.p.rapidapi.com"
+					},
+					{
+						"key": "X-RapidAPI-Key",
+						"type": "text",
+						"value": "10fe21a4d0msh2212b3874b6dd58p1b9c97jsn542c7cfa4d0b"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"q\": \"1.0\",\n\t\"from\": \"{{from}}\",\n\t\"to\": \"{{to}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://currency-exchange.p.rapidapi.com/exchange",
+					"protocol": "https",
+					"host": [
+						"currency-exchange",
+						"p",
+						"rapidapi",
+						"com"
+					],
+					"path": [
+						"exchange"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "8a275dea-939d-47b6-893e-925f98699378",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "e867c62a-3822-45d2-a7d9-89d610e2cd04",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

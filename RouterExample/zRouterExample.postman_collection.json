@@ -1,0 +1,205 @@
+{
+	"info": {
+		"_postman_id": "90f416ac-dfd1-4fae-9a79-2e431fd02464",
+		"name": "zRouterExample",
+		"description": "Router Example.\n\n1)create a router file, \"Router.json\" and attach as data file to the collection.\n\nSo we can create atomic tests and run in any order\n\n\n1->2->3\n2->3->4\n4->3->2\n",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Request 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "eaf6f10c-2973-462f-a965-a175a43a6efc",
+						"exec": [
+							"postman.setNextRequest(\"Router\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://example.com",
+					"protocol": "http",
+					"host": [
+						"example",
+						"com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Request 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "caf04ac2-c021-4daa-9c6c-06ba98c12917",
+						"exec": [
+							"postman.setNextRequest(\"Router\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://example.com",
+					"protocol": "http",
+					"host": [
+						"example",
+						"com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Request 3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ee7db7d4-bf9e-40df-92c6-42709de74b8d",
+						"exec": [
+							"postman.setNextRequest(\"Router\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://example.com",
+					"protocol": "http",
+					"host": [
+						"example",
+						"com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Request 4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "51bc8136-c37f-482b-b909-ae21a33bc362",
+						"exec": [
+							"postman.setNextRequest(\"Router\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://example.com",
+					"protocol": "http",
+					"host": [
+						"example",
+						"com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Request 5",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "21a7aab6-e0c8-43f3-a8f7-94dc09d03ed0",
+						"exec": [
+							"postman.setNextRequest(\"Router\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://example.com",
+					"protocol": "http",
+					"host": [
+						"example",
+						"com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Router",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cf823c72-15b1-41f5-a6cd-510ac444cd2d",
+						"exec": [
+							"postman.setNextRequest(getNextRequest());",
+							"",
+							"function getNextRequest(){",
+							"    let routes;",
+							"    if (Array.isArray(pm.globals.get(\"remainingRoutes\")) === true){",
+							"       routes =  pm.globals.get(\"remainingRoutes\");",
+							"    } else {",
+							"         console.log(\"First Run\");",
+							"         ",
+							"         routes = pm.iterationData.get(\"routes\");",
+							"    }",
+							"        ",
+							"    ",
+							"   ",
+							"    ",
+							"    let nextRequest = routes.shift();",
+							"    console.log(\"nextRequest\" + nextRequest);",
+							"    console.log(\"remaining\" + routes);",
+							"    pm.globals.set(\"remainingRoutes\", routes);",
+							"    ",
+							"    if (nextRequest === undefined){",
+							"        pm.globals.unset(\"remainingRoutes\");",
+							"        return null;",
+							"    }",
+							"    ",
+							"    return nextRequest;",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://example.com",
+					"protocol": "http",
+					"host": [
+						"example",
+						"com"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
